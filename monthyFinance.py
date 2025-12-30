@@ -5,7 +5,7 @@ from argparse import ArgumentParser, Action, ArgumentError
 
 card_info = {
     "Discover": {
-        "name_match": "Discover-Statement-*.csv",
+        "name_match": "Discover*.csv",
         "raw_data": [],
         "process_data": []
     },
@@ -40,7 +40,7 @@ card_info = {
         "process_data": []
     },    
     
-    "Paypal": {
+    "PayPal": {
         "name_match": "Download*.CSV",
         "raw_data": [],
         "process_data": []
@@ -145,7 +145,7 @@ def preprocess_data_bilt():
     card_info[card]["process_data"] = process_data
 
 def preprocess_data_paypal():
-    card = "Paypal"
+    card = "PayPal"
     raw_data = card_info[card]["raw_data"]
 
     process_data = []
