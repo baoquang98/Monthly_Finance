@@ -22,7 +22,7 @@ card_info = {
         "process_data": []
     },
 
-    "WF": {
+    "ActiveCash": {
         "name_match": "CreditCard2*.csv",
         "raw_data": [],
         "process_data": []
@@ -34,7 +34,7 @@ card_info = {
         "process_data": []
     },
     
-    "Bilt": {
+    "Autograph": {
         "name_match": "CreditCard1*.csv",
         "raw_data": [],
         "process_data": []
@@ -103,11 +103,11 @@ def preprocess_data_td():
     
     card_info[card]["process_data"] = process_data
 
-def preprocess_data_wf():
-    card = "WF"
+def preprocess_data_active_cash():
+    card = "ActiveCash"
     raw_data = card_info[card]["raw_data"]
     process_data = []
-    # WF raw data header: Date,Amount,,,Description
+    # ActiveCash raw data header: Date,Amount,,,Description
     #                      "Card", "Transaction Date", "Post Date", "Description", "Amount", "Category", "Note"
     for l in raw_data:
         if l[4].find("PAYMENT THANK YOU") == -1:
@@ -130,12 +130,12 @@ def preprocess_data_usbank():
     
     card_info[card]["process_data"] = process_data
 
-def preprocess_data_bilt():
-    card = "Bilt"
+def preprocess_data_autograph():
+    card = "Autograph"
     raw_data = card_info[card]["raw_data"]
 
     process_data = []
-    # Bilt raw data header: Date,Amount,,,Description
+    # Autograph raw data header: Date,Amount,,,Description
     #                      "Card", "Transaction Date", "Post Date", "Description", "Amount", "Category", "Note"
     for l in raw_data:
         if l[4].find("PAYMENT THANK YOU") == -1:
@@ -149,7 +149,7 @@ def preprocess_data_paypal():
     raw_data = card_info[card]["raw_data"]
 
     process_data = []
-    # Bilt raw data header: "Date","Time","TimeZone","Name","Type","Status","Currency","Amount","Fees","Total","Exchange Rate","Receipt ID","Balance","Transaction ID","Item Title"
+    # PayPal raw data header: "Date","Time","TimeZone","Name","Type","Status","Currency","Amount","Fees","Total","Exchange Rate","Receipt ID","Balance","Transaction ID","Item Title"
     #                       "Card", "Transaction Date", "Post Date", "Description", "Amount", "Category", "Note"
     for l in raw_data:
         if l[4] == "General PayPal Debit Card Transaction":
@@ -162,9 +162,9 @@ def preprocess_data():
     preprocess_data_discover()
     preprocess_data_chase()
     preprocess_data_td()
-    preprocess_data_wf()
+    preprocess_data_active_cash()
     preprocess_data_usbank()
-    preprocess_data_bilt()
+    preprocess_data_autograph()
     preprocess_data_paypal()
 
 def find_category(desc):
