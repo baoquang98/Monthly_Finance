@@ -23,7 +23,7 @@ card_info = {
     },
 
     "ActiveCash": {
-        "name_match": "CreditCard2*.csv",
+        "name_match": "ActiveCash*.csv",
         "raw_data": [],
         "process_data": []
     },
@@ -35,7 +35,7 @@ card_info = {
     },
     
     "Autograph": {
-        "name_match": "CreditCard1*.csv",
+        "name_match": "Autograph*.csv",
         "raw_data": [],
         "process_data": []
     },    
@@ -106,12 +106,13 @@ def preprocess_data_td():
 def preprocess_data_active_cash():
     card = "ActiveCash"
     raw_data = card_info[card]["raw_data"]
+    raw_data = raw_data[1:]
     process_data = []
-    # ActiveCash raw data header: Date,Amount,,,Description
+    # ActiveCash raw data header: "DATE","DESCRIPTION","AMOUNT","CHECK #","STATUS"
     #                      "Card", "Transaction Date", "Post Date", "Description", "Amount", "Category", "Note"
     for l in raw_data:
-        if l[4].find("PAYMENT THANK YOU") == -1:
-            process_l = [card, l[0], l[0], l[4], -float(l[1]), find_category(l[4]), ""]
+        if l[1].find("ONLINE ACH PAYMENT THANK YOU") == -1:
+            process_l = [card, l[0], l[0], l[1], -float(l[2]), find_category(l[1]), ""]
             process_data.append(process_l)
     
     card_info[card]["process_data"] = process_data
@@ -133,13 +134,14 @@ def preprocess_data_usbank():
 def preprocess_data_autograph():
     card = "Autograph"
     raw_data = card_info[card]["raw_data"]
+    raw_data = raw_data[1:]
 
     process_data = []
-    # Autograph raw data header: Date,Amount,,,Description
+    # ActiveCash raw data header: "DATE","DESCRIPTION","AMOUNT","CHECK #","STATUS"
     #                      "Card", "Transaction Date", "Post Date", "Description", "Amount", "Category", "Note"
     for l in raw_data:
-        if l[4].find("PAYMENT THANK YOU") == -1:
-            process_l = [card, l[0], l[0], l[4], -float(l[1]), find_category(l[4]), ""]
+        if l[1].find("ONLINE ACH PAYMENT THANK YOU") == -1:
+            process_l = [card, l[0], l[0], l[1], -float(l[2]), find_category(l[1]), ""]
             process_data.append(process_l)
     
     card_info[card]["process_data"] = process_data
@@ -174,10 +176,10 @@ def find_category(desc):
         (["peacock", "stubhub", "movie", "amc", "spotify"], "Entertainment"),
         (["chewy", "petsmart", "petco"], "Pet"),
         (["walgreens", "cvs"], "Medical"),
-        (["h mart", "lidl", "costco whse", "walmart", "wal-mart", "www costco com"], "Groceries"),
-        (["costco gas", "sheetz", "shell", "liberty", "gas"], "Gas"),
-        (["goodwill", "temu", "amazon", "planet aid", "uniqlo"], "Merchandise"),
-        (["tbaar", "seafood", "lobster", "nishiki", "canteen", "outback", "kusshi", "pho", "wine kitchen", "swirls", "grill", "bubble tea", "lucky corner", "teado"], "Restaurants"),
+        (["h mart", "lidl", "costco whse", "walmart", "wal-mart", "www costco com", "wegman"], "Groceries"),
+        (["costco gas", "sheetz", "shell", "liberty"], "Gas"),
+        (["goodwill", "temu", "amazon", "planet aid", "uniqlo", "marshalls"], "Merchandise"),
+        (["tbaar", "seafood", "lobster", "nishiki", "canteen", "outback", "kusshi", "pho", "wine kitchen", "swirls", "grill", "bubble tea", "lucky corner", "teado", "thanh son tofu", "heytea", "kanpai", "jbc", "mezeh"], "Restaurants"),
         (["lift", "uber", "travel"], "Travel")
     ]
     
