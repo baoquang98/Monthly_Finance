@@ -17,7 +17,7 @@ card_info = {
     },
     
     "TD": {
-        "name_match": "transactions*.csv",
+        "name_match": "TD*.csv",
         "raw_data": [],
         "process_data": []
     },
@@ -29,7 +29,7 @@ card_info = {
     },
 
     "USBank": {
-        "name_match": "Credit Card - *.csv",
+        "name_match": "USBank*.csv",
         "raw_data": [],
         "process_data": []
     },
@@ -41,7 +41,7 @@ card_info = {
     },    
     
     "PayPal": {
-        "name_match": "Download*.CSV",
+        "name_match": "Paypal*.CSV",
         "raw_data": [],
         "process_data": []
     }
