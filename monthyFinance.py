@@ -1,47 +1,47 @@
-from glob import glob
+from fnmatch import fnmatch
 import csv
 import os 
 from argparse import ArgumentParser, Action, ArgumentError
 
 card_info = {
     "Discover": {
-        "name_match": "Discover*.csv",
+        "name_match": "discover*.csv",
         "raw_data": [],
         "process_data": []
     },
     
     "Chase": {
-        "name_match": "Chase*.CSV",
+        "name_match": "chase*.csv",
         "raw_data": [],
         "process_data": []
     },
     
     "TD": {
-        "name_match": "TD*.csv",
+        "name_match": "td*.csv",
         "raw_data": [],
         "process_data": []
     },
 
     "ActiveCash": {
-        "name_match": "ActiveCash*.csv",
+        "name_match": "activecash*.csv",
         "raw_data": [],
         "process_data": []
     },
 
     "USBank": {
-        "name_match": "USBank*.csv",
+        "name_match": "usbank*.csv",
         "raw_data": [],
         "process_data": []
     },
     
     "Autograph": {
-        "name_match": "Autograph*.csv",
+        "name_match": "autograph*.csv",
         "raw_data": [],
         "process_data": []
     },    
     
     "PayPal": {
-        "name_match": "Paypal*.CSV",
+        "name_match": "paypal*.csv",
         "raw_data": [],
         "process_data": []
     }
@@ -49,9 +49,12 @@ card_info = {
 
 def read_csv_input(args):
     for card, info in card_info.items():
-        file_list = glob(os.path.join(args.input, info["name_match"]))
+        file_list = [
+            name for name in os.listdir(args.input)
+            if fnmatch(name.lower(), info["name_match"])
+        ]
         if file_list:
-            file_name = file_list[0]
+            file_name = os.path.join(args.input, file_list[0])
             print(file_name)
         else:
             print("Can't find csv file for {}".format(card))
