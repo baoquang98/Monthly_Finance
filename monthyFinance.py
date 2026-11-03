@@ -71,10 +71,13 @@ def preprocess_data_discover():
 
     raw_data = raw_data[1:]
     process_data = []
-    #Discover raw data header: Trans. Date,Post Date,Description,Amount,Category
+    #Discover raw data header: Transaction Date,Posted Date        , Card No.   , Description  ,Category ,Debit      ,Credit
+    #                          "Card"          , "Transaction Date", "Post Date", "Description", "Amount", "Category", "Note"
     for l in raw_data:
-        if l[2].find("INTERNET PAYMENT - THANK YOU") == -1:
-            process_l = [card, l[0], l[1], l[2], l[3], find_category(l[2]), ""]
+        if not l:
+            continue
+        if l[3].find("INTERNET PAYMENT - THANK YOU") == -1:
+            process_l = [card, l[0], l[1], l[3], float(l[5]), find_category(l[3]), ""]
             process_data.append(process_l)
     
     card_info[card]["process_data"] = process_data
@@ -182,7 +185,7 @@ def find_category(desc):
         (["h mart", "lidl", "costco whse", "walmart", "wal-mart", "www costco com", "wegman"], "Groceries"),
         (["costco gas", "sheetz", "shell", "liberty"], "Gas"),
         (["goodwill", "temu", "amazon", "planet aid", "uniqlo", "marshalls"], "Merchandise"),
-        (["tbaar", "seafood", "lobster", "nishiki", "canteen", "outback", "kusshi", "pho", "wine kitchen", "swirls", "grill", "bubble tea", "lucky corner", "teado", "thanh son tofu", "heytea", "kanpai", "jbc", "mezeh"], "Restaurants"),
+        (["tbaar", "seafood", "lobster", "nishiki", "canteen", "outback", "kusshi", "pho", "wine kitchen", "swirls", "grill", "bubble tea", "lucky corner", "teado", "thanh son tofu", "heytea", "kanpai", "jbc", "mezeh", "ramen", "noodle", "pho"], "Restaurants"),
         (["lift", "uber", "travel"], "Travel")
     ]
     
